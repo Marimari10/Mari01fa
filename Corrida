@@ -1,0 +1,67 @@
+let xJogador = [0, 0, 0];
+let yJogador = [100, 200, 300];
+let icones = ["🚗", "🏎️", "🚙"];
+let velocidade = [2, 2, 2]; // Adiciona velocidade inicial para cada carro
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(200);
+  desenhaPista();
+  desenhaLinhaDeChegada();
+  desenhaJogadores();
+  verificaVencedor();
+
+  // Atualiza a posição dos jogadores
+  for (let i = 0; i < xJogador.length; i++) {
+    xJogador[i] += velocidade[i]; // Movimento contínuo
+  }
+}
+
+function desenhaPista() {
+  fill('white');
+  for (let i = 0; i < 400; i += 100) {
+    rect(0, i, 400, 50);
+  }
+}
+
+function desenhaLinhaDeChegada() {
+  fill('white');
+  rect(350, 0, 10, 400);
+  fill('black');
+  for (let yAtual = 0; yAtual < 400; yAtual += 20) {
+    rect(350, yAtual, 10, 10);
+  }
+}
+
+function desenhaJogadores() {
+  textSize(40);
+  for (let i = 0; i < xJogador.length; i++) {
+    text(icones[i], xJogador[i], yJogador[i]);
+  }
+}
+
+function verificaVencedor() {
+  for (let i = 0; i < xJogador.length; i++) {
+    if (xJogador[i] > 350) {
+      textSize(20);
+      fill('red');
+      text(`Jogador ${i + 1} venceu!`, 50, 200);
+      noLoop();
+    }
+  }
+}
+
+function keyReleased() {
+  if (key == "a") {
+    velocidade[0] += 1; // Acelera o carro 1
+  }
+  if (key == "s") {
+    velocidade[1] += 1; // Acelera o carro 2
+  }
+  if (key == "d") {
+    velocidade[2] += 2; // Acelera o carro 3
+  }
+}
